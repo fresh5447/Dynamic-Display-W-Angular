@@ -1,0 +1,115 @@
+
+<!DOCTYPE HTML>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js"></script>
+
+
+
+<div class="container">
+    <div id="output">
+        <script id="countriesTemplate" type="text/x-handlebars-template">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Country Code</th>
+                    <th>Country Name</th>
+                    <th>Population</th>
+                    <th>English?</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each countries}}
+                        <tr>
+                            <td  data-index={{@index}}>{{ countryCode }}</td>
+                            <td>{{ countryName }}</td>
+                            <td style="{{#if popChecker}}color:green {{else}}color:red{{/if}}">{{ population }}</td>
+                            <td>{{ english }}</td>
+                        </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <div class="text-success">Population > 100,000</div>
+            <div class="text-danger">Population > 5,000,000</div>
+        </script>
+    </div> <!-- id output -->
+</div> <!-- container -->
+
+
+
+
+
+<script>
+
+
+    var theData = {countries:[
+        {countryCode: "BY",
+        countryName: "Belarus",
+        population: "9,685,000",
+        english: false
+        },{countryCode: "BZ",
+        countryName: "Belize",
+        population: "314,522",
+        english: true},{countryCode: "CA",
+        countryName: "Canada",
+        population: "33,679,000",
+        english: true},{countryCode: "CC",
+        countryName: "Cocos Islands",
+        population: "628",
+        english: true},{countryCode: "CD",
+        countryName: "Democratic of the Congo",
+        population: "70,916,439",
+        english: false},{countryCode: "CF",
+        countryName: "Central African Republic",
+        population: "4,844,927",
+        english: false},{countryCode: "CG",
+        countryName: "Republic of the Congo",
+        population: "3,039,126",
+        english: false},{ countryCode: "CH",
+        countryName: "Switzerland",
+        population: "7,581,000",
+        english: false}]};
+
+    $(function () {
+
+        Handlebars.registerHelper("popChecker", function(pop){
+            var popChecker = null;
+            if (population > 5000000){
+                popChecker = false;
+            } else if (population > 100000){
+                popChecker = true;
+            } else {
+                popChecker = null;
+            }
+        });
+
+        var theTemplateScript = $("#countriesTemplate").html();
+        var theTemplate = Handlebars.compile(theTemplateScript);
+        $(document.body).append(theTemplate (theData));
+
+        function refreshTable(data){
+            var html= theTemplate(data);
+            $("#output").html(html); // replace html in the right place
+        }
+        refreshTable();
+    });
+
+</script>
+
+</body>
+</html>
+
+
