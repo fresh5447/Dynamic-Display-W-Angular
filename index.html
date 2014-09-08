@@ -20,7 +20,7 @@
 
 
 <div class="container">
-    <div id="output">
+
         <script id="countriesTemplate" type="text/x-handlebars-template">
             <table class="table table-striped">
                 <thead>
@@ -45,7 +45,7 @@
             <div class="text-success">Population > 100,000</div>
             <div class="text-danger">Population > 5,000,000</div>
         </script>
-    </div> <!-- id output -->
+
 </div> <!-- container -->
 
 
@@ -102,7 +102,7 @@
 
         function refreshTable(data){
             var html= theTemplate(data);
-            $("#output").html(html); // replace html in the right place
+
         }
         refreshTable();
     });
